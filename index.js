@@ -1,13 +1,13 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-require('dotenv').config();
-require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000);
 const http = require('http');
+
+// 1. LE FIX POUR RENDER : Création d'un mini-serveur pour garder le bot en vie
 http.createServer((req, res) => {
-   res.writeHead(200);
-   res.end('Bot is online!');
+    res.writeHead(200);
+    res.end('Le bot Feur est en ligne !');
 }).listen(process.env.PORT || 3000);
 
-// Création d'une nouvelle instance du client Discord
+// 2. Configuration du bot
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -16,25 +16,19 @@ const client = new Client({
     ]
 });
 
-// Quand le bot est prêt
-client.once('clientReady', () => {
-    console.log(`Connecté en tant que ${client.user.tag} ! Le bot "feur" est opérationnel.`);
+client.once('clientReady', (c) => {
+    console.log(`✅ Prêt ! Connecté en tant que ${c.user.tag}`);
 });
 
-// Écoute des messages
 client.on('messageCreate', (message) => {
     if (message.author.bot) return;
 
-    // Nettoyage : minuscules + suppression de la ponctuation finale (?!.)
     const cleanMessage = message.content.toLowerCase().trim().replace(/[?.!)]+$/, "");
 
-    // Vérifie si la phrase se termine par "quoi"
-    // Le "$" signifie "à la fin de la chaîne"
     if (cleanMessage.endsWith('quoi')) {
         message.reply('feur !');
     }
 });
 
-// Connexion au serveur avec le token
-// Remplacez 'VOTRE_TOKEN_ICI' par votre véritable token
-client.login('MTQ4OTA1NDE2MTU2NjY5OTU2Mg.GS0qye.eK-NFhbFZ2zcmiFclAs6KApLNTgqajjk8skq_U');
+// 3. Connexion (Utilise la variable d'environnement de Render)
+client.login(process.env.TOKEN);
