@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 require('dotenv').config();
+require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000);
 
 // Création d'une nouvelle instance du client Discord
 const client = new Client({
