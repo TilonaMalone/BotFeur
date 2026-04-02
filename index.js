@@ -1,6 +1,11 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 require('dotenv').config();
 require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000);
+const http = require('http');
+http.createServer((req, res) => {
+   res.writeHead(200);
+   res.end('Bot is online!');
+}).listen(process.env.PORT || 3000);
 
 // Création d'une nouvelle instance du client Discord
 const client = new Client({
@@ -32,4 +37,4 @@ client.on('messageCreate', (message) => {
 
 // Connexion au serveur avec le token
 // Remplacez 'VOTRE_TOKEN_ICI' par votre véritable token
-client.login(process.env.TOKEN);
+client.login('MTQ4OTA1NDE2MTU2NjY5OTU2Mg.GS0qye.eK-NFhbFZ2zcmiFclAs6KApLNTgqajjk8skq_U');
